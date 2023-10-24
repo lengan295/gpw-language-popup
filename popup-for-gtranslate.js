@@ -1,6 +1,7 @@
-
 // POPUP SELECT LANGAGE
 (function ($) {
+    var u_class = '.gtranslate_wrapper';
+
     $(document).ready(function () {
         // debugger;
         if ($('.logged-in').length) return;
@@ -8,58 +9,42 @@
         const modalConantainer = $('.modal-select-language');
         const selectedLanguage = localStorage.getItem('selectedLanguage');
 
-        if (modalConantainer.length == 0 || selectedLanguage) {
+        if (modalConantainer.length === 0 || selectedLanguage) {
             return;
         }
         $('.modal-select-language .kt-blocks-modal-link').click();
 
-        $('#select_currency').change(function () {
-            let selectedCurrency = $(this).val();
-            if (selectedCurrency !== 'VND') {
-                $('.confirm_currency_wrapper').show();
-            } else {
-                $('.confirm_currency_wrapper').hide();
+        function fire_event(element, event) {
+            try {
+                if (document.createEventObject) {
+                    var evt = document.createEventObject();
+                    element.fireEvent('on' + event, evt)
+                } else {
+                    var evt = document.createEvent('HTMLEvents');
+                    evt.initEvent(event, true, true);
+                    element.dispatchEvent(evt)
+                }
+            } catch (e) {
             }
-        });
+        }
 
-        $(document).on('click', '.popup-language-currency-submit', function () {
-            let selectedCurrency = $('#select_currency').val();
-            let confirm_checkbox = $('#confirm_currency');
+        $('#submit-lang-button').click(function () {
+            debugger;
+            let selectedLanguage = $('#lang-selector').val();
 
-            if (selectedCurrency !== 'VND' && !confirm_checkbox.is(':checked')) {
-                $('.confirm_currency_wrapper label').css("color", "red");
-                return;
-            }
+            let gt_selected = $(u_class + ' div.gt-selected')[0];
+            fire_event(gt_selected, 'pointerenter');
+            fire_event(gt_selected, 'click');
 
-            let selectedLanguage = $('#select_language').val();
+            let selector = u_class + ' a[data-gt-lang="' + selectedLanguage + '"]';
+            let a = $(selector)[0];
 
-            const uris = window.location.pathname.split('/');
+            fire_event(a, 'click');
+            fire_event(document, 'click');
+
             localStorage.setItem('selectedLanguage', selectedLanguage);
-
-            if (selectedLanguage === 'en') {
-                window.location.replace('/?site_currency=' + selectedCurrency);
-            } else {
-                window.location.replace(addReplaceLangCode(window.location.href, selectedLanguage) + '?site_currency=' + selectedCurrency);
-            }
+            modalConantainer.find('.kt-modal-close').click();
         });
 
     });
-
-    function addReplaceLangCode(url, langCode) {
-        var a = document.createElement('a');
-        a.href = url;
-
-        var paths = a.pathname.split('/');
-        paths.shift();
-
-        if (paths[0].length == 2) {
-            paths[0] = langCode;
-        } else {
-            paths.unshift(langCode);
-        }
-        return a.protocol + '//' +
-            a.host + '/' + paths.join('/') +
-            (a.search != '' ? a.search : '') +
-            (a.hash != '' ? a.hash : '');
-    }
 })(jQuery);
