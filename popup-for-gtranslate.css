@@ -1,0 +1,12 @@
+
+.modal-select-language .kt-blocks-modal-link {
+    display: none;
+}
+
+.modal-select-language .wp-block-button a:hover {
+    color: #fff !important;
+}
+
+.modal-select-language .wp-block-button a:hover {
+    background-color: #0dae82 !important;
+}
