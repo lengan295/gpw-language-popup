@@ -148,3 +148,16 @@
     <button class="kt-blocks-modal-link kt-modal-label-show" data-modal-open="kt-target-modal_84719e-9c"><span
             class="kt-blocks-modal-link-inner">Learn More</span></button>
 </div>
+
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            let userLang = navigator.language || navigator.userLanguage;
+            if (userLang === 'vi-VN') {
+                $('#lang-selector').val("vi");
+            } else {
+                $('#lang-selector').val("en");
+            }
+        });
+    })(jQuery);
+</script>

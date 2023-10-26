@@ -3,7 +3,6 @@
     var u_class = '.gtranslate_wrapper';
 
     $(document).ready(function () {
-        // debugger;
         if ($('.logged-in').length) return;
 
         const modalConantainer = $('.modal-select-language');
@@ -29,7 +28,6 @@
         }
 
         $('#submit-lang-button').click(function () {
-            debugger;
             let selectedLanguage = $('#lang-selector').val();
 
             let gt_selected = $(u_class + ' div.gt-selected')[0];
